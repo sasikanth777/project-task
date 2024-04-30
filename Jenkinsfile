@@ -1,42 +1,15 @@
 pipeline {
-    agent any
+    agent {
         docker {
             image 'node:14'
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
         }
-
+    }
+    stages {
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
             }
         }
-
-        stage('Run Tests') {
-            steps {
-                sh 'npm test'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                script {
-                    docker.build('boilerplate-express:latest .')
-                }
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    // Use kubectl to apply Kubernetes manifest files
-                    sh 'kubectl apply -f your-kubernetes-manifest.yaml'
-                }
-            }
-        }
+        // Other stages...
     }
 }
